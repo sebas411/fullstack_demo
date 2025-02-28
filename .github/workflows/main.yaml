@@ -1,0 +1,60 @@
+name: main pipeline
+
+on: [pull_request]
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '15.x'
+      - name: install dependencies
+        run: npm ci
+      - name: linting
+        run: npm run lint
+  
+  formatter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '15.x'
+      - name: install dependencies
+        run: npm ci
+      - name: formating
+        run: npm run prettier
+  
+  tester:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '15.x'
+      - name: install dependencies
+        run: npm ci
+      - name: testing
+        run: CI=true npm run test 
+
+  builder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '15.x'
+      - name: install dependencies
+        run: npm ci
+      - name: building
+        run: npm run build
